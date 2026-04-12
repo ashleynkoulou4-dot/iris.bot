@@ -2,7 +2,6 @@ const { makeWASocket, useMultiFileAuthState } = require('@whiskeysockets/baileys
 const menu = require('./commands/menu')
 const rules = require('./commands/rules')
 const info = require('./commands/info')
-const quiz = require('./commands/quiz')
 const compatibility = require('./commands/compatibility')
 const truthOrDare = require('./commands/truth_or_dare')
 const opening = require('./commands/opening')
