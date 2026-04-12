@@ -2,7 +2,18 @@ const { makeWASocket, useMultiFileAuthState } = require('@whiskeysockets/baileys
 const menu = require('./commands/menu')
 const rules = require('./commands/rules')
 const info = require('./commands/info')
+const quiz = require('./commands/quiz')
+const compatibility = require('./commands/compatibility')
+const truthOrDare = require('./commands/truth_or_dare')
+const opening = require('./commands/opening')
+const news = require('./commands/news')
 
+// Dans messages.upsert :
+if (text.toLowerCase() === '!quiz') await quiz(sock, msg)
+else if (text.toLowerCase() === '!compat') await compatibility(sock, msg)
+else if (text.toLowerCase() === '!action') await truthOrDare(sock, msg)
+else if (text.toLowerCase() === '!opening') await opening(sock, msg)
+else if (text.toLowerCase() === '!news') await news(sock, msg)
 async function startBot() {
     const { state, saveCreds } = await useMultiFileAuthState('auth_info')
     const sock = makeWASocket({ auth: state })
