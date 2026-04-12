@@ -10,7 +10,7 @@ const news = require('./commands/news')
 const quiz = require('./commands/quiz')
 
 // Dans messages.upsert :
-if (text.toLowerCase() === '!quiz') await quiz(sock, msg)
+
 else if (text.toLowerCase().startsWith('!rep')) {
     const answer = text.replace('!rep', '').trim()
     await quiz.checkAnswer(sock, msg, answer)
