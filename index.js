@@ -12,7 +12,10 @@ async function startBot() {
     sock.ev.on('messages.upsert', async ({ messages }) => {
         const msg = messages[0]
         if (!msg.message) return
+const config = require('./config')
 
+// Exemple d’utilisation
+await sock.sendMessage(msg.key.remoteJid, { text: config.welcomeMessage })
         const text = msg.message.conversation || msg.message.extendedTextMessage?.text
         if (text) {
             console.log('Message reçu:', text)
