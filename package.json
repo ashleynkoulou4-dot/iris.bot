@@ -1,0 +1,25 @@
+{
+  "name": "iris-bot",
+  "version": "1.0.0",
+  "description": "🌸 Iris Bot – Bot otaku pour gérer une communauté WhatsApp avec Node.js et Baileys",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": [
+    "whatsapp",
+    "bot",
+    "otaku",
+    "anime",
+    "baileys"
+  ],
+  "author": "Ashley",
+  "license": "MIT",
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.7.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
