@@ -7,6 +7,16 @@ const compatibility = require('./commands/compatibility')
 const truthOrDare = require('./commands/truth_or_dare')
 const opening = require('./commands/opening')
 const news = require('./commands/news')
+const quiz = require('./commands/quiz')
+
+// Dans messages.upsert :
+if (text.toLowerCase() === '!quiz') await quiz(sock, msg)
+else if (text.toLowerCase().startsWith('!rep')) {
+    const answer = text.replace('!rep', '').trim()
+    await quiz.checkAnswer(sock, msg, answer)
+}
+else if (text.toLowerCase() === '!ranking') await quiz.showRanking(sock, msg)
+
 
 // Dans messages.upsert :
 if (text.toLowerCase() === '!quiz') await quiz(sock, msg)
