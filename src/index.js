@@ -7,7 +7,6 @@ const compatibility = require('./commands/compatibility')
 const truthOrDare = require('./commands/truth_or_dare')
 const opening = require('./commands/opening')
 const news = require('./commands/news')
-const quiz = require('./commands/quiz')
 
 // Dans messages.upsert :
 
