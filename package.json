@@ -17,7 +17,9 @@
   "author": "Ashley",
   "license": "MIT",
   "dependencies": {
-    "@whiskeysockets/baileys": "^6.7.5"
+    "@whiskeysockets/baileys": "^6.7.5",
+    "node-cron": "^3.0.2",
+    "sqlite3": "^5.1.6"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"
