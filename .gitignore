@@ -10,3 +10,6 @@ auth_info/
 # OS files
 .DS_Store
 Thumbs.db
+
+# SQLite database (generated at runtime)
+src/db/learning.db
