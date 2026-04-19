@@ -22,8 +22,29 @@ jobs:
             chmod 600 ~/.ssh/id_rsa
             ssh -o StrictHostKeyChecking=no ubuntu@$EC2_HOST 'echo "Connected to EC2"'
 
+  playwright-tests:
+    docker:
+      - image: cimg/node:18.17
+    parallelism: 4
+    resource_class: large
+    steps:
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: npm install
+      - run:
+          name: Run Playwright Tests
+          command: |
+            mkdir test-results
+            pnpm run serve &
+            TESTFILES=$(circleci tests glob "specs/e2e/**/*.spec.ts")
+            echo "$TESTFILES" | circleci tests run --command="xargs pnpm playwright test --config=playwright.config.ci.ts --reporter=junit" --verbose --split-by=timings
+      - store_test_results:
+          path: test-results
+
 workflows:
   version: 2
   deploy:
     jobs:
       - deploy
+      - playwright-tests
