@@ -9,12 +9,17 @@ jobs:
       - setup_remote_docker:
           version: 20.10.7
       - run:
-          name: Deploy to ECS
+          name: Configure AWS CLI
           command: |
             aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
             aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
             aws configure set default.region $AWS_REGION
-            # Add your ECS deployment commands here
+      - run:
+          name: SSH to EC2
+          command: |
+            echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+            chmod 600 ~/.ssh/id_rsa
+            ssh -o StrictHostKeyChecking=no ubuntu@$EC2_HOST 'echo "Connected to EC2"'
 
 workflows:
   version: 2
