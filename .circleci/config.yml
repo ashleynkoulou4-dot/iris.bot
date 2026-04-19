@@ -12,6 +12,9 @@ jobs:
           name: Install Dependencies
           command: npm install
       - run:
+          name: Start Application
+          command: npm start
+      - run:
           name: Start Webhook Server
           command: |
             node server.js
@@ -32,6 +35,9 @@ jobs:
       - run:
           name: Install Dependencies
           command: npm install
+      - run:
+          name: Start Application
+          command: npm start
       - run:
           name: Run Playwright Tests
           command: |
