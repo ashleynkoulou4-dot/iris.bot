@@ -3,19 +3,20 @@ version: 2.1
 jobs:
   deploy:
     docker:
-      - image: cimg/python:3.9
+      - image: cimg/node:18.17
     steps:
       - checkout
       - setup_remote_docker:
           version: 20.10.7
       - run:
-          name: Configure AWS CLI
-          command: |
-            aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-            aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-            aws configure set default.region $AWS_REGION
+          name: Install Dependencies
+          command: npm install
       - run:
-          name: SSH to EC2
+          name: Start Webhook Server
+          command: |
+            node server.js
+      - run:
+          name: Deploy to EC2
           command: |
             echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
             chmod 600 ~/.ssh/id_rsa
