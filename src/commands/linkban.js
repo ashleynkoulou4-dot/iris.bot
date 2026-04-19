@@ -9,7 +9,7 @@ const whitelist = new Set(config.authorizedLinks.map(d => d.toLowerCase()))
  * Matches http://, https://, www. prefixes and bare domain patterns.
  */
 function extractDomains(text) {
-    const urlRegex = /(?:https?:\/\/|www\.)([^\s/?.#]+\.[\w.]+)|(?<!\w)([\w-]+\.(?:com|net|org|io|co|fr|tv|gg|me|app|dev|xyz|info|biz|ly|link|to|be|gl|cc|uk|us|ca|de|jp|br|ru|in|au|es|it|nl|se|no|dk|fi|pl|pt|ar|mx|cl|pe|ve|za|ng|ke|gh|eg|ma|tn|dz|sn|ci|cm|mg|re|mu|gp|mq|nc|pf|yt|pm|wf|tf|bl|mf|sx|cw|aw|bq|sr|gy|gf|fk|gs|sh|ac|io|ai|vg|vi|pr|gu|as|mp|um|pw|fm|mh|ki|nr|tv|to|ws|ck|nu|tk|pn|nf|cx|cc|hm|aq|bv|sj|eh|ps|xk))(?!\w)/gi)
+    const urlRegex = /(?:https?:\/\/|www\.)([^\s/?.#]+\.[\w.]+)|(?<!\w)([\w-]+\.(?:com|net|org|io|co|fr|tv|gg|me|app|dev|xyz|info|biz|ly|link|to|be|gl|cc|uk|us|ca|de|jp|br|ru|in|au|es|it|nl|se|no|dk|fi|pl|pt|ar|mx|cl|pe|ve|za|ng|ke|gh|eg|ma|tn|dz|sn|ci|cm|mg|re|mu|gp|mq|nc|pf|yt|pm|wf|tf|bl|mf|sx|cw|aw|bq|sr|gy|gf|fk|gs|sh|ac|io|ai|vg|vi|pr|gu|as|mp|um|pw|fm|mh|ki|nr|tv|to|ws|ck|nu|tk|pn|nf|cx|cc|hm|aq|bv|sj|eh|ps|xk))(?!\w)/gi
     const found = []
     let match
     while ((match = urlRegex.exec(text)) !== null) {
