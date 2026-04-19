@@ -1,56 +1,45 @@
 version: 2.1
 
 jobs:
-  deploy:
-    docker:
-      - image: cimg/node:18.17
+  build-and-test:
+    macos:
+      xcode: 14.3.1
+    environment:
+      FL_OUTPUT_DIR: output
+      FASTLANE_LANE: test
     steps:
       - checkout
-      - setup_remote_docker:
-          version: 20.10.7
+      - run: bundle install
       - run:
-          name: Install Dependencies
-          command: npm install
-      - run:
-          name: Start Application
-          command: npm start
-      - run:
-          name: Start Webhook Server
-          command: |
-            node server.js
-      - run:
-          name: Deploy to EC2
-          command: |
-            echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-            chmod 600 ~/.ssh/id_rsa
-            ssh -o StrictHostKeyChecking=no ubuntu@$EC2_HOST 'echo "Connected to EC2"'
-
-  playwright-tests:
-    docker:
-      - image: cimg/node:18.17
-    parallelism: 4
-    resource_class: large
-    steps:
-      - checkout
-      - run:
-          name: Install Dependencies
-          command: npm install
-      - run:
-          name: Start Application
-          command: npm start
-      - run:
-          name: Run Playwright Tests
-          command: |
-            mkdir test-results
-            pnpm run serve &
-            TESTFILES=$(circleci tests glob "specs/e2e/**/*.spec.ts")
-            echo "$TESTFILES" | circleci tests run --command="xargs pnpm playwright test --config=playwright.config.ci.ts --reporter=junit" --verbose --split-by=timings
+          name: Fastlane
+          command: bundle exec fastlane $FASTLANE_LANE
+      - store_artifacts:
+          path: output
       - store_test_results:
-          path: test-results
+          path: output/scan
+
+  adhoc:
+    macos:
+      xcode: 14.3.1
+    environment:
+      FL_OUTPUT_DIR: output
+      FASTLANE_LANE: adhoc
+    steps:
+      - checkout
+      - run: bundle install
+      - run:
+          name: Fastlane
+          command: bundle exec fastlane $FASTLANE_LANE
+      - store_artifacts:
+          path: output
 
 workflows:
-  version: 2
-  deploy:
+  build-test-adhoc:
     jobs:
-      - deploy
-      - playwright-tests
+      - build-and-test
+      - adhoc:
+          filters:
+            branches:
+              only: development
+          requires:
+            - build-and-test
